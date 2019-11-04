@@ -15,11 +15,15 @@ def stationarity_test(ts):
     from statsmodels.tsa.stattools import adfuller
     res = adfuller(ts, autolag='AIC')
     out = pd.Series(res[0:4], index=['statistic', 'p-value', '#lags', '#obs'])
-    if(out['p-value'] < .05):
-        res = 1
-    else:
-        res = 0
-    return res, out
+    for key,value in res[4].items():
+        out['critical value (%s)'%key] = value
+    print(out)
+    #if(out['p-value'] < .05):
+    #    res = 1
+    #else:
+    #    res = 0
+    
+    #return res, out
 
 
 def plot_autocorrelation(ts, lags):
